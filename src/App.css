@@ -79,7 +79,7 @@
 }
 
 .valentine-button-follow {
-  transition: left 3s ease-out, top 3s ease-out !important;
+  transition: left 2s ease-out, top 3s ease-out !important;
   z-index: 1000;
   pointer-events: auto;
 }

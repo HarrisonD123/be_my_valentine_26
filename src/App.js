@@ -13,7 +13,7 @@ function App() {
   const [isNoButtonShrinking, setIsNoButtonShrinking] = useState(false);
   const [isNoButtonClicked, setIsNoButtonClicked] = useState(false);
   const [savedText, setSavedText] = useState('Will you be my Valentine?');
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 }); // top-left for centering
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [shouldFollowMouse, setShouldFollowMouse] = useState(false);
   const typeIntervalRef = useRef(null);
   const noButtonHoverTimerRef = useRef(null);
@@ -67,19 +67,11 @@ function App() {
         }
         // Start mouse following 1 second after typewriter completes
         setTimeout(() => {
-          // Get current mouse position before starting to follow, centering the button
+          // Get current mouse position before starting to follow
           let positionSet = false;
           const getInitialPosition = (e) => {
             if (!positionSet) {
-              const rect = yesButtonRef.current?.getBoundingClientRect();
-              if (rect) {
-                setMousePosition({
-                  x: e.clientX - rect.width / 2,
-                  y: e.clientY - rect.height / 2,
-                });
-              } else {
-                setMousePosition({ x: e.clientX, y: e.clientY });
-              }
+              setMousePosition({ x: e.clientX, y: e.clientY });
               setShouldFollowMouse(true);
               positionSet = true;
               window.removeEventListener('mousemove', getInitialPosition);
@@ -89,17 +81,7 @@ function App() {
           // Fallback if mouse doesn't move
           setTimeout(() => {
             if (!positionSet) {
-              const rect = yesButtonRef.current?.getBoundingClientRect();
-              const centerX = window.innerWidth / 2;
-              const centerY = window.innerHeight / 2;
-              if (rect) {
-                setMousePosition({
-                  x: centerX - rect.width / 2,
-                  y: centerY - rect.height / 2,
-                });
-              } else {
-                setMousePosition({ x: centerX, y: centerY });
-              }
+              setMousePosition({ x: window.innerWidth / 2, y: window.innerHeight / 2 });
               setShouldFollowMouse(true);
               window.removeEventListener('mousemove', getInitialPosition);
             }
@@ -116,7 +98,7 @@ function App() {
     let secondTypewriterTimer = null;
     
     const timer = setTimeout(() => {
-      const newText = 'I hope you say yes! 💕';
+      const newText = 'you know what to do right?';
       setHeadingText(newText);
       
       // Typewriter effect
@@ -191,19 +173,11 @@ function App() {
     }
   }, [displayedText, isNoButtonHovered, isNoButtonShrinking, isNoButtonClicked]);
 
-  // Mouse move listener for button following (keeps button centered on cursor for any size)
+  // Mouse move listener for button following
   useEffect(() => {
     if (shouldFollowMouse) {
       const handleMouseMove = (e) => {
-        const rect = yesButtonRef.current?.getBoundingClientRect();
-        if (rect) {
-          setMousePosition({
-            x: e.clientX - rect.width / 2,
-            y: e.clientY - rect.height / 2,
-          });
-        } else {
-          setMousePosition({ x: e.clientX, y: e.clientY });
-        }
+        setMousePosition({ x: e.clientX, y: e.clientY });
       };
       
       window.addEventListener('mousemove', handleMouseMove);
@@ -231,6 +205,7 @@ function App() {
               position: 'fixed',
               left: `${mousePosition.x}px`,
               top: `${mousePosition.y}px`,
+              transform: `translate(-50%, -50%) ${isSecondButtonSize ? 'scale(4)' : isTimerComplete ? 'scale(2)' : ''}`,
             } : {}}
           >
             Yes
