@@ -1,21 +1,34 @@
+import React, { useState } from 'react';
 import './App.css';
+import dogRose from './images/dog_rose.jpg';
+import Slideshow from './Slideshow';
 
 function App() {
+  const [currentPage, setCurrentPage] = useState('home');
+
+  if (currentPage === 'slideshow') {
+    return <Slideshow onBack={() => setCurrentPage('home')} />;
+  }
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src="/images/dog_rose.jpg" className="App-logo" alt="dog rose" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <h1>Will you be my Valentine?</h1>
+        <img src={dogRose} className="App-logo" alt="dog rose" />
+        <div className="button-container">
+          <button 
+            className="valentine-button"
+            onClick={() => setCurrentPage('slideshow')}
+          >
+            Yes
+          </button>
+          <button 
+            className="valentine-button"
+            onClick={() => alert('Button 2 clicked!')}
+          >
+            No
+          </button>
+        </div>
       </header>
     </div>
   );
