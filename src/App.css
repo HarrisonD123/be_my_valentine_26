@@ -41,18 +41,47 @@
   font-weight: bold;
   border-radius: 8px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: transform 3s ease, all 0.3s ease;
+  transform-origin: right center;
   min-width: 180px;
 }
 
 .valentine-button:hover {
   background-color: rgba(97, 218, 251, 1);
-  transform: translateY(-2px);
   box-shadow: 0 4px 15px rgba(97, 218, 251, 0.4);
+}
+
+.valentine-button:not(.valentine-button-large):not(.valentine-button-extra-large):not(.valentine-button-shrink):hover {
+  transform: translateY(-2px);
 }
 
 .valentine-button:active {
   transform: translateY(0);
+}
+
+.valentine-button-large {
+  transform: scale(2);
+  transform-origin: right center;
+  z-index: 10;
+  transition: transform 3s ease;
+}
+
+.valentine-button-extra-large {
+  transform: scale(4);
+  transform-origin: right center;
+  z-index: 10;
+  transition: transform 3s ease;
+}
+
+.valentine-button-shrink {
+  transform: scale(0.333);
+  transition: transform 15s ease;
+}
+
+.valentine-button-follow {
+  transition: left 3s ease-out, top 3s ease-out !important;
+  z-index: 1000;
+  pointer-events: auto;
 }
 
 @keyframes App-logo-spin {
