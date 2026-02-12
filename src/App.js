@@ -14,7 +14,6 @@ function App() {
   const [isNoButtonShrinking, setIsNoButtonShrinking] = useState(false);
   const [isNoButtonClicked, setIsNoButtonClicked] = useState(false);
   const [savedText, setSavedText] = useState('Will you be my Valentine?');
-  const [mousePosition, setMousePosition] = useState({ x: window.innerWidth / 2, y: window.innerHeight / 2 });
   const [shouldFollowMouse, setShouldFollowMouse] = useState(false);
   const lastMousePositionRef = useRef({ x: window.innerWidth / 2, y: window.innerHeight / 2 });
   const typeIntervalRef = useRef(null);
@@ -26,6 +25,11 @@ function App() {
   const mainSecondTypewriterTimerRef = useRef(null);
   const isNoButtonClickedRef = useRef(false);
   const finalTimerRef = useRef(null);
+  
+  // Refs for smooth mouse following with requestAnimationFrame
+  const mouseTargetRef = useRef({ x: window.innerWidth / 2, y: window.innerHeight / 2 });
+  const followerPositionRef = useRef({ x: window.innerWidth / 2, y: window.innerHeight / 2 });
+  const animationFrameRef = useRef(null);
 
   const handleNoButtonHover = () => {
     setIsNoButtonHovered(true);
@@ -75,26 +79,9 @@ function App() {
         }
         // Start mouse following 1 second after typewriter completes
         setTimeout(() => {
-          // Get the button's current position in the viewport
-          if (yesButtonRef.current) {
-            const rect = yesButtonRef.current.getBoundingClientRect();
-            const buttonCenterX = rect.left + rect.width / 2;
-            const buttonCenterY = rect.top + rect.height / 2;
-            
-            // Start from button's current position
-            setMousePosition({ x: buttonCenterX, y: buttonCenterY });
-            setShouldFollowMouse(true);
-            
-            // Then transition to actual mouse position after a brief delay
-            // This ensures the initial position is rendered and the transition works
-            setTimeout(() => {
-              setMousePosition(lastMousePositionRef.current);
-            }, 50);
-          } else {
-            // Fallback if ref isn't available
-            setMousePosition(lastMousePositionRef.current);
-            setShouldFollowMouse(true);
-          }
+          // Initialize target to current mouse position
+          mouseTargetRef.current = lastMousePositionRef.current;
+          setShouldFollowMouse(true);
         }, 1000);
       }
     }, 100); // 100ms delay between each character
@@ -103,6 +90,9 @@ function App() {
   const handleNoButtonClick = () => {
     setIsNoButtonClicked(true);
     isNoButtonClickedRef.current = true;
+    
+    // Shrink the "No" button immediately
+    setIsNoButtonShrinking(true);
     
     // Clear all main timer effects
     if (mainTimerRef.current) {
@@ -124,6 +114,10 @@ function App() {
     if (finalTimerRef.current) {
       clearTimeout(finalTimerRef.current);
       finalTimerRef.current = null;
+    }
+    if (noButtonHoverTimerRef.current) {
+      clearTimeout(noButtonHoverTimerRef.current);
+      noButtonHoverTimerRef.current = null;
     }
     if (typeIntervalRef.current) {
       clearInterval(typeIntervalRef.current);
@@ -282,17 +276,83 @@ function App() {
   useEffect(() => {
     const handleMouseMove = (e) => {
       lastMousePositionRef.current = { x: e.clientX, y: e.clientY };
-      // Update displayed position if following is active
-      if (shouldFollowMouse) {
-        setMousePosition({ x: e.clientX, y: e.clientY });
-      }
+      mouseTargetRef.current = { x: e.clientX, y: e.clientY };
     };
     
     window.addEventListener('mousemove', handleMouseMove);
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
     };
-  }, [shouldFollowMouse]);
+  }, []);
+
+  // Smooth following animation using requestAnimationFrame
+  useEffect(() => {
+    if (!shouldFollowMouse) {
+      // Cancel animation if following is disabled
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+        animationFrameRef.current = null;
+      }
+      return;
+    }
+
+    const animate = () => {
+      if (!yesButtonRef.current || !shouldFollowMouse) {
+        return;
+      }
+
+      // Get current scale and translateX values
+      let scale = 1;
+      let translateX = -50;
+      let easeScale = 1;
+      if (isSecondButtonSize) {
+        scale = 4;
+        translateX = 100;
+        easeScale = 8;
+      } else if (isTimerComplete) {
+        scale = 2;
+        translateX = 0;
+        easeScale = 8;
+      }
+
+      // Use constant easing for consistent visual speed regardless of scale
+      const easing = 0.1 / easeScale;
+
+      // Calculate difference from mouse to current position
+      const diffX = mouseTargetRef.current.x - followerPositionRef.current.x;
+      const diffY = mouseTargetRef.current.y - followerPositionRef.current.y;
+
+      // Apply easing to the difference
+      followerPositionRef.current.x += diffX * easing;
+      followerPositionRef.current.y += diffY * easing;
+
+      // Update the button's position directly using CSS transform
+      yesButtonRef.current.style.left = `${followerPositionRef.current.x}px`;
+      yesButtonRef.current.style.top = `${followerPositionRef.current.y}px`;
+      yesButtonRef.current.style.transform = `translate(${translateX}%, -50%) scale(${scale})`;
+
+      // Continue the animation loop
+      animationFrameRef.current = requestAnimationFrame(animate);
+    };
+
+    // Initialize follower position to button's current position when following starts
+    if (yesButtonRef.current) {
+      const rect = yesButtonRef.current.getBoundingClientRect();
+      followerPositionRef.current.x = rect.left + rect.width / 2;
+      followerPositionRef.current.y = rect.top + rect.height / 2;
+    }
+
+    // Start the animation loop
+    animationFrameRef.current = requestAnimationFrame(animate);
+
+    // Cleanup function
+    return () => {
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+        animationFrameRef.current = null;
+      }
+    };
+  }, [shouldFollowMouse, isTimerComplete, isSecondButtonSize]);
 
   if (currentPage === 'slideshow') {
     return <Slideshow onBack={() => setCurrentPage('home')} />;
@@ -325,9 +385,6 @@ function App() {
             }}
             style={shouldFollowMouse ? {
               position: 'fixed',
-              left: `${mousePosition.x}px`,
-              top: `${mousePosition.y}px`,
-              transform: `translate(-50%, -50%) ${isSecondButtonSize ? 'scale(4)' : isTimerComplete ? 'scale(2)' : ''}`,
             } : {}}
           >
             Yes

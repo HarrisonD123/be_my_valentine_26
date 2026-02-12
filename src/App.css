@@ -85,9 +85,9 @@ h1 {
 }
 
 .valentine-button-follow {
-  transition: left 2s ease-out, top 3s ease-out !important;
   z-index: 1000;
   pointer-events: auto;
+  /* No transition - using requestAnimationFrame for smooth movement */
 }
 
 @keyframes App-logo-spin {
