@@ -1,3 +1,9 @@
+h1 {
+  font-family: "Great Vibes", cursive;
+  background-color: #ff0095;
+  padding: 0 12px;
+}
+
 .App {
   text-align: center;
 }
@@ -33,9 +39,9 @@
 }
 
 .valentine-button {
-  background-color: rgba(97, 218, 251, 0.8);
-  border: 2px solid rgba(97, 218, 251, 1);
-  color: #282c34;
+  background-color: #ff0095;
+  border: 2px solid #ff0095;
+  color: white;
   padding: 15px 30px;
   font-size: 1.2rem;
   font-weight: bold;
@@ -47,8 +53,8 @@
 }
 
 .valentine-button:hover {
-  background-color: rgba(97, 218, 251, 1);
-  box-shadow: 0 4px 15px rgba(97, 218, 251, 0.4);
+  background-color: #ff0095;
+  box-shadow: 0 4px 15px #ff0095;
 }
 
 .valentine-button:not(.valentine-button-large):not(.valentine-button-extra-large):not(.valentine-button-shrink):hover {

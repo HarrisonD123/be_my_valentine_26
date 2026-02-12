@@ -8,6 +8,20 @@
   padding: 20px;
 }
 
+.slideshow-container h1 {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: "Great Vibes", cursive;
+  background-color: #ff0095;
+  padding: 0 12px;
+  color: white;
+  z-index: 100;
+  text-align: center;
+  white-space: nowrap;
+}
+
 .slideshow-image-container {
   position: relative;
   max-width: 80%;
@@ -20,13 +34,15 @@
 .slideshow-image {
   max-width: 100%;
   max-height: 70vh;
+  width: auto;
+  height: auto;
   object-fit: contain;
   border-radius: 10px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 }
 
 .slideshow-button {
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: #ca0277;
   border: 2px solid rgba(255, 255, 255, 0.5);
   color: white;
   font-size: 3rem;
@@ -42,7 +58,7 @@
 }
 
 .slideshow-button:hover {
-  background-color: rgba(255, 255, 255, 0.3);
+  background-color: #ff0095;
   border-color: rgba(255, 255, 255, 0.8);
   transform: scale(1.1);
 }
@@ -62,9 +78,9 @@
   position: absolute;
   top: 20px;
   left: 20px;
-  background-color: rgba(97, 218, 251, 0.8);
+  background-color: #ca0277;
   border: none;
-  color: #282c34;
+  color: white;
   padding: 12px 24px;
   border-radius: 5px;
   cursor: pointer;
@@ -74,9 +90,9 @@
 }
 
 .back-to-home:hover {
-  background-color: rgba(97, 218, 251, 1);
+  background-color: #ff0095;
   transform: translateY(-2px);
-  box-shadow: 0 4px 10px rgba(97, 218, 251, 0.4);
+  box-shadow: 0 4px 10px #ca0277;
 }
 
 @media (max-width: 768px) {
