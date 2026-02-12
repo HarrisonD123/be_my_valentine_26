@@ -1,16 +1,32 @@
 {
   "files": {
-    "main.css": "/be_my_valentine_26/static/css/main.106c268b.css",
-    "main.js": "/be_my_valentine_26/static/js/main.0851bd76.js",
+    "main.css": "/be_my_valentine_26/static/css/main.1b194af1.css",
+    "main.js": "/be_my_valentine_26/static/js/main.bdd51311.js",
     "static/js/453.a476c5da.chunk.js": "/be_my_valentine_26/static/js/453.a476c5da.chunk.js",
+    "static/media/7.jpg": "/be_my_valentine_26/static/media/7.edaafbb5246167b08f9b.jpg",
+    "static/media/8.jpg": "/be_my_valentine_26/static/media/8.e0711a555aaa52e3761b.jpg",
+    "static/media/13.jpg": "/be_my_valentine_26/static/media/13.43943fb41fcdb1845d29.jpg",
+    "static/media/1.jpg": "/be_my_valentine_26/static/media/1.7015c2ec75a951356e66.jpg",
+    "static/media/9.jpg": "/be_my_valentine_26/static/media/9.95e36f34730c4466e40c.jpg",
+    "static/media/14.jpg": "/be_my_valentine_26/static/media/14.45f9e330e837da9eb29e.jpg",
+    "static/media/4.jpg": "/be_my_valentine_26/static/media/4.f20cd4ff7bc5a0a18d18.jpg",
+    "static/media/3.jpg": "/be_my_valentine_26/static/media/3.26827cc8c41958d6ab09.jpg",
+    "static/media/6.PNG": "/be_my_valentine_26/static/media/6.6cea0b5b1bc23e236519.PNG",
+    "static/media/11.jpg": "/be_my_valentine_26/static/media/11.a995922570e4b1c95857.jpg",
+    "static/media/10.jpg": "/be_my_valentine_26/static/media/10.3af74bceaa5d6dd25519.jpg",
+    "static/media/2.jpg": "/be_my_valentine_26/static/media/2.1a31a33ad6a6790d67a5.jpg",
+    "static/media/12.jpg": "/be_my_valentine_26/static/media/12.e4de5fa9b72be514aafd.jpg",
+    "static/media/hearts_bg.jpg": "/be_my_valentine_26/static/media/hearts_bg.d782220697f8ea941efa.jpg",
+    "static/media/5.jpg": "/be_my_valentine_26/static/media/5.dc2026b5073f2f8cd3f3.jpg",
+    "static/media/15.JPG": "/be_my_valentine_26/static/media/15.f8ce05469c8127c7dc51.JPG",
     "static/media/dog_rose.jpg": "/be_my_valentine_26/static/media/dog_rose.d4898464724a7f4ea524.jpg",
     "index.html": "/be_my_valentine_26/index.html",
-    "main.106c268b.css.map": "/be_my_valentine_26/static/css/main.106c268b.css.map",
-    "main.0851bd76.js.map": "/be_my_valentine_26/static/js/main.0851bd76.js.map",
+    "main.1b194af1.css.map": "/be_my_valentine_26/static/css/main.1b194af1.css.map",
+    "main.bdd51311.js.map": "/be_my_valentine_26/static/js/main.bdd51311.js.map",
     "453.a476c5da.chunk.js.map": "/be_my_valentine_26/static/js/453.a476c5da.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.106c268b.css",
-    "static/js/main.0851bd76.js"
+    "static/css/main.1b194af1.css",
+    "static/js/main.bdd51311.js"
   ]
 }
